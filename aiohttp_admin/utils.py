@@ -143,7 +143,7 @@ def validate_query(query, possible_columns):
         possible_columns + [MULTI_FIELD_TEXT_QUERY])
     if not_valid:
         column_list = ', '.join(not_valid)
-        msg = 'Columns: {} do not present in resource'.format(column_list)
+        msg = 'Columns not present in resource: {}'.format(column_list)
         raise JsonValidaitonError(msg)
     return MappingProxyType(q)
 
