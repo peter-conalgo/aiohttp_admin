@@ -35,7 +35,7 @@ def trafaret_entity(entity_name, primary_key, schema):
     e = {"name": entity_name,
          "pk": primary_key,
          "actions": ['show', 'edit', 'delete'],
-         "sort_field": '_id',
+         "sort_field": primary_key,
          "per_page": 50,
          "description": "desc",
          "fields": [{"name": k, "type": v, "extra": e} for k, v, e in f]}
