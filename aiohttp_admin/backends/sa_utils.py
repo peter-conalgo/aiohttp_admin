@@ -52,6 +52,10 @@ def build_trafaret(sa_type, **kwargs):
         item_trafaret = build_trafaret(sa_type.item_type)
         trafaret = t.List(item_trafaret)
 
+    elif isinstance(sa_type, postgresql.INET):
+        # TODO: depend on "ipaddress" module?
+        trafaret = t.String(**kwargs)
+
     else:
         type_ = str(sa_type)
         msg = 'Validator for type {} not implemented'.format(type_)

@@ -4,6 +4,7 @@ from collections import namedtuple
 from datetime import datetime, date
 from functools import partial
 from types import MappingProxyType
+from enum import Enum
 
 import trafaret as t
 from aiohttp import web
@@ -32,11 +33,14 @@ def json_datetime_serial(obj):
         serial = obj.isoformat()
         return serial
 
+    if isinstance(obj, Enum):
+        return obj.name
+
     if ObjectId is not None and isinstance(obj, ObjectId):
         # TODO: try to use bson.json_util instead
         return str(obj)
 
-    raise TypeError("Type not serializable")
+    raise TypeError("Type not serializable: " + str(type(obj)))
 
 
 jsonify = partial(json.dumps, default=json_datetime_serial)
@@ -125,7 +129,7 @@ def gather_template_folders(template_folder):
     if template_folder is None:
         template_folders = [template_root]
     else:
-        template_folders = [template_root] + template_folder
+        template_folders = template_folder + [template_root]
     return template_folders
 
 
